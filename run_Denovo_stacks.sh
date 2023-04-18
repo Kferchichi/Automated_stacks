@@ -9,8 +9,18 @@
 
 date
 hostname
+
+
+#create a new folder for the quality check reports and files of the Raw data
+
+mkdir -p -f   FASTQC_RD
+
+#run fastqc to check the quality of reads
+
+fastqc -o ./FASTQC_RD/  *.fastq
 #clean the Raw data using cutadapt
 mkdir -p -f   clean_data
+
 #please note, that GBS_Rwadata is the folder where your raw data are saved 
 
 for f in GBS_Rawdata\/*.fastq # for each sample
@@ -21,11 +31,16 @@ do
                                                        
 done
 
+#create a new folder for the quality check reports and files
+
+mkdir -p -f   FASTQC_CLND
 
 #run fastqc to check the quality of reads
 
-fastqc *_cut.fastq
+fastqc -o ./FASTQC_CLND/  *_cut.fastq
 
+# run Multiqc with --interractive parameter and give the floder or the path where you saved your fastq reports
+multiqc ./FASTQC_CLND/ --interractive
 #automate stacks
 #test from Khaoula
 mkdir -p -f   output_stacks4
