@@ -88,7 +88,12 @@ grep -v "#" filtered_popnovo_snps_005maf.recode.vcf | sed -E 's/^/X_/g' > filter
 grep "#" filtered_popnovo_snps_005maf.recode.vcf >  edit_head
 cat edit_head filtered_popnovo_snps_005maf.snps.vcf >> filtered_popnovo_snps_005maf_plink.snps.vcf
 
+#identify prune sites
+
+./plink2 --vcf filtered_popnovo_snps_005maf_plink.snps.vcf --double-id --aec --set-missing-var-ids @:# --out popnovo_snps_005maf
+
 #run  pc analyses with plink
 #this will generate eigenvalue and eigenvectors files
-
-plink2 --vcf filtered_popnovo_snps_005maf_plink.snps.vcf --pca approx 10 --aec --out  filtered_popnovo_snps_005maf_plink 
+./plink2 --vcf rfiltered_popnovo_snps_005maf_plink.snps.vcf --double-id --aec --set-missing-var-ids @:# --extract popnovo_snps_005maf.prune.in --make-bed --pca 10 --out plink_005maf
+#for huge samples use the approx option to force generating pc analyses
+.plink2 --vcf filtered_popnovo_snps_005maf_plink.snps.vcf --pca approx 10 --aec --set-missing-var-ids @:# --extract popnovo_snps_005maf.prune.in --make-bed  --out  plink_005maf 
