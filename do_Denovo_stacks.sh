@@ -14,7 +14,7 @@ hostname
 
 #automate stacks
 #test from Khaoula
-mkdir -p -f   output_stacks4
+mkdir -p -f   output_stacks
 read -r -a samples < samples_ID.txt
 
 for i in "${samples[@]}"
